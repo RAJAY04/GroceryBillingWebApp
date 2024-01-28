@@ -1,4 +1,5 @@
 package com.Hackloop.GroceryApp.mapper;
 
-public class UrlMapper {
+public class UrlMapping {
+
 }

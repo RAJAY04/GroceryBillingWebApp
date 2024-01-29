@@ -42,7 +42,7 @@ public class AdminGroceryItemController {
     }
 
     @PostMapping(value = UrlMapping.MANAGE_GROCERY_ITEMS)
-    public ResponseEntity<GroceryItem> manageInventory(@PathVariable Long itemId, @RequestBody InventoryChange inventoryChange) {
+    public ResponseEntity<GroceryItem> manageInventory(@RequestParam Long itemId, @RequestBody InventoryChange inventoryChange) {
         log.info("Manage Inventory Items::{}",inventoryChange);
         return ResponseEntity.ok(groceryItemService.manageInventory(itemId, inventoryChange));
     }

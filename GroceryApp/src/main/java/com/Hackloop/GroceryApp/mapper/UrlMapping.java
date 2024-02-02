@@ -7,7 +7,6 @@ public class UrlMapping {
     public static final String REMOVE_GROCERY_ITEMS = BASE_API + "/admin/deleteGrocery-items/{itemId}";
     public static final String UPDATE_GROCERY_ITEMS = BASE_API + "/admin/updateGrocery-items/{itemId}";
     public static final String MANAGE_GROCERY_ITEMS = BASE_API + "/admin/manageGrocery-items/{itemId}";
-
-    public static final String USER_GET_GROCERY_ITEMS = BASE_API + "/user/getGrocery-items";
-    public static final String USER_BOOK_MULTIPLE_GROCERY_ITEMS = BASE_API + "/user/place-order";
+    public static final String GENERATE_TOTAL = BASE_API + "/admin/generate-total";
+    public static final String REMOVE_ALL_GROCERY_ITEMS = BASE_API + "/admin/remove-all-grocery-items";
 }

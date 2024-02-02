@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class InventoryChange {
+public class InventoryChangeDTO {
     private int changeAmount;
 }

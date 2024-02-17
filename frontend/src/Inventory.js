@@ -5,8 +5,7 @@ import HamburgerMenu from './HamburgerMenu';
 const ADD_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/addGrocery-items';
 const REMOVE_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/deleteGrocery-items/{itemId}';
 const ADMIN_GET_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/getGrocery-items';
-const UPDATE_GROCERY_ITEMS = 'http://localhost:8080//admin/updateGrocery-items/{itemId}';
-
+const UPDATE_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/updateGrocery-items/{itemId}';
 
 const Inventory = () => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -17,6 +16,7 @@ const Inventory = () => {
     price: 0,
   });
   const [updateProduct, setUpdateProduct] = useState(null);
+  const [updatedName, setUpdatedName] = useState('');
   const [updatedQuantity, setUpdatedQuantity] = useState(0);
   const [updatedPrice, setUpdatedPrice] = useState(0);
 
@@ -80,40 +80,39 @@ const Inventory = () => {
     }
   };
 
- const handleUpdateProduct = async () => {
-   try {
-     if (!updateProduct || !updateProduct.id) {
-       console.error('No product selected for update');
-       return;
-     }
+  const handleUpdateProduct = async () => {
+    try {
+      if (!updateProduct || !updateProduct.id) {
+        console.error('No product selected for update');
+        return;
+      }
 
-     const response = await fetch(UPDATE_GROCERY_ITEMS.replace('{itemId}', updateProduct.id), {
-       method: 'PUT',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         quantity: updatedQuantity,
-         price: updatedPrice,
-       }),
-     });
+      const response = await fetch(UPDATE_GROCERY_ITEMS.replace('{itemId}', updateProduct.id), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: updatedName,
+          quantity: updatedQuantity,
+          price: updatedPrice,
+        }),
+      });
 
-     if (response.ok) {
-       // Product updated successfully, fetch updated inventory data
-       fetchInventoryData();
+      if (response.ok) {
+        // Product updated successfully, fetch updated inventory data
+        fetchInventoryData();
 
-       // Reset modal state and updateProduct state
-       setShowAddProductModal(false);
-       setUpdateProduct(null);
-     } else {
-       console.error('Failed to update product');
-     }
-   } catch (error) {
-     console.error('Error updating product:', error);
-   }
- };
-
-
+        // Reset modal state and updateProduct state
+        setShowAddProductModal(false);
+        setUpdateProduct(null);
+      } else {
+        console.error('Failed to update product');
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  };
 
   return (
     <div>
@@ -223,6 +222,20 @@ const Inventory = () => {
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="bg-white p-8 rounded-md w-full max-w-md">
               <h2 className="text-2xl font-semibold mb-6 text-center">Update Product</h2>
+              <div className="mb-4">
+                <label htmlFor="updatedName" className="block text-sm font-medium text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="updatedName"
+                  name="updatedName"
+                  value={updatedName}
+                  onChange={(e) => setUpdatedName(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Name"
+                />
+              </div>
               <div className="mb-4">
                 <label htmlFor="updatedQuantity" className="block text-sm font-medium text-gray-700">
                   Quantity

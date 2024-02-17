@@ -128,10 +128,10 @@ public class GroceryItemService {
 
             if (optionalItem.isPresent()) {
                 GroceryItem item = optionalItem.get();
-                total += item.getPrice().doubleValue(); // Assuming 'price' is a BigDecimal
+                // Multiply the item price by the item quantity and add it to the total
+                total += item.getPrice().doubleValue() * item.getQuantity();
             } else {
-                // Handle the case where an item with the given ID is not found
-                // You can throw an exception or handle it in a way that suits your requirements
+                throw new ItemNotFoundException("Item not found with id: " + itemId);
             }
         }
 

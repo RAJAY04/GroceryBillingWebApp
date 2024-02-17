@@ -1,5 +1,6 @@
 package com.Hackloop.GroceryApp.controller;
 
+import com.Hackloop.GroceryApp.dto.BillItemDTO;
 import com.Hackloop.GroceryApp.dto.GenerateTotalRequestDTO;
 import com.Hackloop.GroceryApp.dto.GroceryItemDTO;
 import com.Hackloop.GroceryApp.dto.InventoryChangeDTO;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -51,7 +53,6 @@ public class AdminGroceryItemController {
         return ResponseEntity.ok(groceryItemService.manageInventory(itemId, inventoryChangeDTO));
     }
 
-
     @PostMapping(value = UrlMapping.GENERATE_TOTAL)
     public ResponseEntity<Double> generateTotal(@RequestBody GenerateTotalRequestDTO generateTotalRequestDTO) {
         // Logic to calculate the total based on the provided item IDs
@@ -67,4 +68,15 @@ public class AdminGroceryItemController {
         groceryItemService.removeAllGroceryItems();
         return ResponseEntity.ok("All grocery items removed successfully.");
     }
+
+    @PostMapping(value = UrlMapping.BILL_ITEMS)
+    public ResponseEntity<Double> billGroceryItems(@RequestBody List<GroceryItemDTO> billItems) {
+        // Deduct items from inventory and calculate total price
+        double total = groceryItemService.billItems(billItems);
+
+        // Return total as response
+        return ResponseEntity.ok(total);
+    }
+
+
 }

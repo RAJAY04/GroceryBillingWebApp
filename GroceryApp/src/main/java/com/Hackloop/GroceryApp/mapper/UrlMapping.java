@@ -9,4 +9,5 @@ public class UrlMapping {
     public static final String MANAGE_GROCERY_ITEMS = BASE_API + "/admin/manageGrocery-items/{itemId}";
     public static final String GENERATE_TOTAL = BASE_API + "/admin/generate-total";
     public static final String REMOVE_ALL_GROCERY_ITEMS = BASE_API + "/admin/remove-all-grocery-items";
+    public static final String BILL_ITEMS = BASE_API + "/admin/bill-items";
 }

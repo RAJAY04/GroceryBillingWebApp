@@ -1,5 +1,6 @@
 package com.Hackloop.GroceryApp.service;
 
+import com.Hackloop.GroceryApp.dto.BillItemDTO;
 import com.Hackloop.GroceryApp.dto.GroceryItemDTO;
 import com.Hackloop.GroceryApp.dto.InventoryChangeDTO;
 import com.Hackloop.GroceryApp.exception.InsufficientQuantityException;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -62,8 +64,6 @@ public class GroceryItemService {
         }
     }
 
-
-
     public GroceryItem manageInventory(Long itemId, InventoryChangeDTO inventoryChangeDTO) {
         Integer changeAmount = inventoryChangeDTO.getChangeAmount();
 
@@ -77,19 +77,18 @@ public class GroceryItemService {
             GroceryItem item = optionalItem.get();
             int updatedQuantity = Math.max(0, item.getQuantity() + changeAmount);
             item.setQuantity(updatedQuantity);
-            return groceryItemRepository.save(item);
+            return groceryItemRepository.save(item); // Return the updated GroceryItem
         } else {
             throw new ItemNotFoundException("Item not found with id: " + itemId);
         }
     }
 
 
-
     public List<GroceryItem> getAvailableGroceryItems() {
         return groceryItemRepository.findAllByQuantityGreaterThan(0);
     }
 
-    public Orders bookGroceryItems(List<GroceryItemDTO> orderItemsDTO) {
+    public Orders createOrder(List<GroceryItemDTO> orderItemsDTO) {
         BigDecimal total = BigDecimal.ZERO;
         List<GroceryItem> orderItems = convertDTOsToEntities(orderItemsDTO);
 
@@ -119,6 +118,8 @@ public class GroceryItemService {
 
         return order;
     }
+
+
 
     public double calculateTotal(List<Long> itemIds) {
         double total = 0.0;
@@ -167,5 +168,50 @@ public class GroceryItemService {
         // Reset the auto-increment value to 1
         groceryItemRepository.resetAutoIncrement();
     }
+    // In GroceryItemService.java
+    public double billItems(List<GroceryItemDTO> billItems) {
+        // Convert GroceryItemDTO list to BillItemDTO list
+        List<BillItemDTO> billItemDTOs = convertToBillItems(billItems);
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (BillItemDTO billItemDTO : billItemDTOs) {
+            Optional<GroceryItem> optionalItem = groceryItemRepository.findById(billItemDTO.getItemId());
+            if (optionalItem.isPresent()) {
+                GroceryItem item = optionalItem.get();
+                if (item.getQuantity() >= billItemDTO.getQuantity()) {
+                    BigDecimal itemTotal = item.getPrice().multiply(BigDecimal.valueOf(billItemDTO.getQuantity()));
+                    total = total.add(itemTotal);
+
+                    // Deduct the quantity from inventory
+                    item.setQuantity(item.getQuantity() - billItemDTO.getQuantity());
+                    groceryItemRepository.save(item);
+                } else {
+                    throw new InsufficientQuantityException("Insufficient quantity available for item: " + item.getName());
+                }
+            } else {
+                throw new ItemNotFoundException("Item not found with id: " + billItemDTO.getItemId());
+            }
+        }
+
+        // Return the total price as a double
+        return total.doubleValue();
+    }
+
+
+
+    private List<BillItemDTO> convertToBillItems(List<GroceryItemDTO> groceryItems) {
+        List<BillItemDTO> billItems = new ArrayList<>();
+        for (GroceryItemDTO groceryItem : groceryItems) {
+            BillItemDTO billItem = new BillItemDTO();
+            billItem.setItemId(groceryItem.getItemId());
+            billItem.setName(groceryItem.getName());
+            billItem.setQuantity(groceryItem.getQuantity());
+            billItem.setPrice(groceryItem.getPrice());
+            billItems.add(billItem);
+        }
+        return billItems;
+    }
+
 
 }

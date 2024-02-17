@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import HamburgerMenu from './HamburgerMenu';
 
-// Define base URL for API endpoints
 // Define specific endpoints
-const ADD_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/addGrocery-items';
-const REMOVE_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/deleteGrocery-items/{itemId}';
-const ADMIN_GET_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/getGrocery-items';
+const ADD_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/addGrocery-items';
+const REMOVE_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/deleteGrocery-items/{itemId}';
+const ADMIN_GET_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/getGrocery-items';
+const UPDATE_GROCERY_ITEMS = 'http://localhost:8080//admin/updateGrocery-items/{itemId}';
+
 
 const Inventory = () => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -15,9 +16,11 @@ const Inventory = () => {
     quantity: 0,
     price: 0,
   });
+  const [updateProduct, setUpdateProduct] = useState(null);
+  const [updatedQuantity, setUpdatedQuantity] = useState(0);
+  const [updatedPrice, setUpdatedPrice] = useState(0);
 
   useEffect(() => {
-    // Fetch inventory data initially
     fetchInventoryData();
   }, []);
 
@@ -46,10 +49,7 @@ const Inventory = () => {
       });
 
       if (response.ok) {
-        // Product added successfully, fetch updated inventory data
         fetchInventoryData();
-
-        // Reset modal state and new product state
         setShowAddProductModal(false);
         setNewProduct({
           name: '',
@@ -71,7 +71,6 @@ const Inventory = () => {
       });
 
       if (response.ok) {
-        // Fetch updated inventory data
         fetchInventoryData();
       } else {
         console.error('Failed to remove product');
@@ -81,13 +80,47 @@ const Inventory = () => {
     }
   };
 
+ const handleUpdateProduct = async () => {
+   try {
+     if (!updateProduct || !updateProduct.id) {
+       console.error('No product selected for update');
+       return;
+     }
+
+     const response = await fetch(UPDATE_GROCERY_ITEMS.replace('{itemId}', updateProduct.id), {
+       method: 'PUT',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({
+         quantity: updatedQuantity,
+         price: updatedPrice,
+       }),
+     });
+
+     if (response.ok) {
+       // Product updated successfully, fetch updated inventory data
+       fetchInventoryData();
+
+       // Reset modal state and updateProduct state
+       setShowAddProductModal(false);
+       setUpdateProduct(null);
+     } else {
+       console.error('Failed to update product');
+     }
+   } catch (error) {
+     console.error('Error updating product:', error);
+   }
+ };
+
+
+
   return (
     <div>
       <HamburgerMenu />
       <div className="p-8">
         <h2 className="text-3xl font-bold mb-6">Inventory</h2>
 
-        {/* Display Inventory Items */}
         {inventoryData.map((product) => (
           <div key={product.id} className="bg-first-color p-8 rounded-md mb-4">
             <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
@@ -99,10 +132,15 @@ const Inventory = () => {
             >
               Remove Product
             </button>
+            <button
+              onClick={() => setUpdateProduct(product)}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md mt-2 ml-2 hover:bg-blue-600"
+            >
+              Update Product
+            </button>
           </div>
         ))}
 
-        {/* Add Product Button */}
         <button
           onClick={() => setShowAddProductModal(true)}
           className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4 hover:bg-blue-600"
@@ -110,7 +148,6 @@ const Inventory = () => {
           + Add Product
         </button>
 
-        {/* Add Product Modal */}
         {showAddProductModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="bg-white p-8 rounded-md w-full max-w-md">
@@ -176,6 +213,59 @@ const Inventory = () => {
                   className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
                 >
                   Add Product
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {updateProduct && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div className="bg-white p-8 rounded-md w-full max-w-md">
+              <h2 className="text-2xl font-semibold mb-6 text-center">Update Product</h2>
+              <div className="mb-4">
+                <label htmlFor="updatedQuantity" className="block text-sm font-medium text-gray-700">
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  id="updatedQuantity"
+                  name="updatedQuantity"
+                  value={updatedQuantity}
+                  onChange={(e) => setUpdatedQuantity(parseInt(e.target.value, 10))}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Quantity"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="updatedPrice" className="block text-sm font-medium text-gray-700">
+                  Price per Unit
+                </label>
+                <input
+                  type="number"
+                  id="updatedPrice"
+                  name="updatedPrice"
+                  value={updatedPrice}
+                  onChange={(e) => setUpdatedPrice(parseFloat(e.target.value))}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Price per Unit"
+                />
+              </div>
+              <div className="flex justify-between">
+                <button
+                  onClick={() => {
+                    setShowAddProductModal(false);
+                    setUpdateProduct(null);
+                  }}
+                  className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpdateProduct}
+                  className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+                >
+                  Update Product
                 </button>
               </div>
             </div>

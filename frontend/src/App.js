@@ -10,7 +10,8 @@ import Inventory from './Inventory';
 import Notification from './Notification';
 
 const App = () => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  // Initialize isLoggedIn state based on the presence of the isLoggedIn cookie
+  const [isLoggedIn, setLoggedIn] = useState(!!Cookies.get('isLoggedIn'));
 
   // Function to handle user login
   const handleLogin = () => {
@@ -24,23 +25,15 @@ const App = () => {
     Cookies.remove('isLoggedIn'); // Remove isLoggedIn cookie
   };
 
-  // Effect to check isLoggedIn cookie on component mount
-  useEffect(() => {
-    const isLoggedInCookie = Cookies.get('isLoggedIn');
-    if (isLoggedInCookie === 'true') {
-      setLoggedIn(true);
-    }
-  }, []);
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SignupForm onLogin={handleLogin} />} />
         <Route path="/HomePage" element={isLoggedIn ? <HomePage onLogout={handleLogout} /> : <Navigate to="/" replace />} />
-        <Route path="/Billing" element={<Billing />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Inventory" element={<Inventory />} />
-        <Route path="/Notification" element={<Notification />} />
+        <Route path="/Billing" element={isLoggedIn ? <Billing onLogout={handleLogout} /> : <Navigate to="/" replace />} />
+        <Route path="/Profile" element={isLoggedIn ? <Profile onLogout={handleLogout} /> : <Navigate to="/" replace />} />
+        <Route path="/Inventory" element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/" replace />} />
+        <Route path="/Notification" element={isLoggedIn ? <Notification onLogout={handleLogout} /> : <Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

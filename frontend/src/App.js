@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/Notification" element={<Notification />} />
           </>
         ) : (
-          <Route path="/" element={<Navigate to="/SignupForm" replace />} />
+          <Route path="/" element={<Navigate to="/" replace />} />
         )}
       </Routes>
     </Router>

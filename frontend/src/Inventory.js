@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import HamburgerMenu from './HamburgerMenu';
 
+// Define base URL for API endpoints
+// Define specific endpoints
+const ADD_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/addGrocery-items';
+const REMOVE_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/deleteGrocery-items/{itemId}';
+const ADMIN_GET_GROCERY_ITEMS =  'http://localhost:8080/api/v1/admin/getGrocery-items';
+
 const Inventory = () => {
   const [inventoryData, setInventoryData] = useState([]);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
@@ -8,74 +14,71 @@ const Inventory = () => {
     name: '',
     quantity: 0,
     price: 0,
-    range: 0,
   });
 
   useEffect(() => {
-    // Mock API call
-    // Replace the URL with your actual API endpoint
-    fetch('https://api.example.com/inventory')
-      .then((response) => response.json())
-      .then((data) => {
-        // Assuming the API returns an array of inventory items
-        setInventoryData(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching inventory data:', error);
-      });
+    // Fetch inventory data initially
+    fetchInventoryData();
   }, []);
 
-  const handleAddProduct = () => {
-    // Mock API call to add a new product
-    // Replace the URL with your actual API endpoint for adding products
-    fetch('https://api.example.com/addProduct', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newProduct),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        setInventoryData([...inventoryData, newProduct]);
+  const fetchInventoryData = async () => {
+    try {
+      const response = await fetch(ADMIN_GET_GROCERY_ITEMS);
+      if (response.ok) {
+        const data = await response.json();
+        setInventoryData(data);
+      } else {
+        console.error('Failed to fetch inventory data');
+      }
+    } catch (error) {
+      console.error('Error fetching inventory data:', error);
+    }
+  };
+
+  const handleAddProduct = async () => {
+    try {
+      const response = await fetch(ADD_GROCERY_ITEMS, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
+      });
+
+      if (response.ok) {
+        // Product added successfully, fetch updated inventory data
+        fetchInventoryData();
+
+        // Reset modal state and new product state
         setShowAddProductModal(false);
         setNewProduct({
           name: '',
           quantity: 0,
           price: 0,
-          range: 0,
         });
-      })
-      .catch((error) => {
-        console.error('Error adding product:', error);
-      });
+      } else {
+        console.error('Failed to add product');
+      }
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
   };
 
-  const handleUpdateProduct = (productId, updatedQuantity) => {
-    // Mock API call to update the quantity of a product
-    // Replace the URL with your actual API endpoint for updating product details
-    fetch(`https://api.example.com/updateProduct/${productId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        quantity: updatedQuantity,
-      }),
-    })
-      .then(() => {
-        // Update the local state with the updated quantity
-        setInventoryData((prevData) =>
-          prevData.map((product) =>
-            product.id === productId
-              ? { ...product, quantity: updatedQuantity }
-              : product
-          )
-        );
-      })
-      .catch((error) => {
-        console.error('Error updating product quantity:', error);
+  const handleRemoveProduct = async (itemId) => {
+    try {
+      const response = await fetch(REMOVE_GROCERY_ITEMS.replace('{itemId}', itemId), {
+        method: 'DELETE',
       });
+
+      if (response.ok) {
+        // Fetch updated inventory data
+        fetchInventoryData();
+      } else {
+        console.error('Failed to remove product');
+      }
+    } catch (error) {
+      console.error('Error removing product:', error);
+    }
   };
 
   return (
@@ -89,18 +92,12 @@ const Inventory = () => {
           <div key={product.id} className="bg-first-color p-8 rounded-md mb-4">
             <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
             <p className="text-gray-700 mb-2">Quantity: {product.quantity}</p>
-            <p className="text-gray-700">Price per Unit: ${product.price}</p>
-            <p className="text-gray-700">Range: {product.range}</p>
+            <p className="text-gray-700">Price per Unit: rs.{product.price}</p>
             <button
-              onClick={() =>
-                handleUpdateProduct(
-                  product.id,
-                  prompt('Enter updated quantity:')
-                )
-              }
-              className="bg-third-color text-white py-2 px-4 rounded-md mt-2 hover:bg-fourth-color"
+              onClick={() => handleRemoveProduct(product.id)}
+              className="bg-red-500 text-white py-2 px-4 rounded-md mt-2 hover:bg-red-600"
             >
-              Update Quantity
+              Remove Product
             </button>
           </div>
         ))}
@@ -128,7 +125,7 @@ const Inventory = () => {
                   name="productName"
                   value={newProduct.name}
                   onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-fourth-color"
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                   placeholder="Product Name"
                 />
               </div>
@@ -142,7 +139,7 @@ const Inventory = () => {
                   name="productQuantity"
                   value={newProduct.quantity}
                   onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value, 10) })}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-fourth-color"
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                   placeholder="Quantity"
                 />
               </div>
@@ -156,22 +153,8 @@ const Inventory = () => {
                   name="productPrice"
                   value={newProduct.price}
                   onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-fourth-color"
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                   placeholder="Price per Unit"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="productRange" className="block text-sm font-medium text-gray-700">
-                  Range
-                </label>
-                <input
-                  type="number"
-                  id="productRange"
-                  name="productRange"
-                  value={newProduct.range}
-                  onChange={(e) => setNewProduct({ ...newProduct, range: parseInt(e.target.value, 10) })}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-fourth-color"
-                  placeholder="Range"
                 />
               </div>
               <div className="flex justify-between">
@@ -182,7 +165,6 @@ const Inventory = () => {
                       name: '',
                       quantity: 0,
                       price: 0,
-                      range: 0,
                     });
                   }}
                   className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"

@@ -118,7 +118,14 @@ const Inventory = () => {
     <div>
       <HamburgerMenu />
       <div className="p-8">
-        <h2 className="text-3xl font-bold mb-6">Inventory</h2>
+        <h2 className="text-3xl font-bold">Inventory</h2>
+
+        <button
+                  onClick={() => setShowAddProductModal(true)}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4 mb-4 hover:bg-blue-600"
+                >
+                  + Add Product
+                </button>
 
         {inventoryData.map((product) => (
           <div key={product.id} className="bg-first-color p-8 rounded-md mb-4">
@@ -140,12 +147,7 @@ const Inventory = () => {
           </div>
         ))}
 
-        <button
-          onClick={() => setShowAddProductModal(true)}
-          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4 hover:bg-blue-600"
-        >
-          + Add Product
-        </button>
+
 
         {showAddProductModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">

@@ -1,6 +1,6 @@
-// HamburgerMenu.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import GoogleTranslate from './GoogleTranslate';
 
 const HamburgerMenu = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -14,31 +14,33 @@ const HamburgerMenu = ({ onLogout }) => {
   };
 
   return (
-    <div className="bg-ede7cf lg:flex-col md:flex-col sm:flex-row justify-evenly p-4">
-      <Link to="/HomePage" className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+    <div className="bg-ede7cf lg:flex-col md:flex-col sm:flex-row justify-between items-center p-4">
+      <Link to="/HomePage" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Home</b>
       </Link>
 
-      <Link to="/Inventory" className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+      <Link to="/Inventory" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Inventory</b>
       </Link>
 
-      <Link to="/Billing" className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+      <Link to="/Billing" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Billing</b>
       </Link>
 
-      <Link to="/Notification" className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+      <Link to="/Notification" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Notification</b>
       </Link>
 
-      <Link to="/Profile" className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+      <Link to="/Profile" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Profile</b>
       </Link>
 
       {/* Logout Button */}
-      <button onClick={handleLogout} className="hover:bg-d4ceb0 hover:rounded-2xl  flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4 ">
+      <button onClick={handleLogout} className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Logout</b>
       </button>
+
+      <GoogleTranslate />
     </div>
   );
 };

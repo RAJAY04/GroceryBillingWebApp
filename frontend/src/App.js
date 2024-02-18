@@ -1,5 +1,4 @@
-// App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie'; // Importing js-cookie library
 import SignupForm from './SignupForm';

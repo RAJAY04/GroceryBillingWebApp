@@ -1,35 +1,74 @@
-// Billing.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HamburgerMenu from './HamburgerMenu';
+
+// Define specific endpoints
+const ADMIN_GET_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/getGrocery-items';
+const BILL_ITEMS = 'http://localhost:8080/api/v1/admin/bill-items';
 
 const Billing = () => {
   const [items, setItems] = useState([]);
   const [itemNumber, setItemNumber] = useState('');
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isTableVisible, setIsTableVisible] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const addItem = () => {
-    const newItem = { itemName: `Item ${itemNumber}`, itemNumber, quantity, price };
-    setItems([...items, newItem]);
+  useEffect(() => {
+    // Fetch grocery items on component mount
+    const fetchGroceryItems = async () => {
+      try {
+        const response = await fetch(ADMIN_GET_GROCERY_ITEMS);
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error('Error fetching grocery items:', error);
+      }
+    };
 
-    // Reset input fields
-    setItemNumber('');
-    setQuantity(1);
-    setPrice(0);
+    fetchGroceryItems();
+  }, []);
+
+  const addItem = async () => {
+    // Find the item with the matching id
+    const selectedItem = items.find(item => item.id === parseInt(itemNumber));
+
+    if (selectedItem) {
+      if (quantity <= selectedItem.quantity) {
+        // Update selected items array
+        const newItem = { itemId: selectedItem.id, itemName: selectedItem.name, price: selectedItem.price, quantity };
+        setSelectedItems([...selectedItems, newItem]);
+
+        // Update total price
+        setTotalPrice(prevTotalPrice => prevTotalPrice + (quantity * selectedItem.price));
+
+        // Display the table
+        setIsTableVisible(true);
+      } else {
+        alert('Quantity exceeds available quantity');
+      }
+    } else {
+      alert('Invalid Item Number');
+    }
   };
 
-  const removeItem = (index) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
+  const confirmBill = async () => {
+    try {
+      // Make API call to confirm bill
+      await fetch(BILL_ITEMS, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectedItems),
+      });
 
-  const calculateTotal = () => {
-    return items.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
-  const confirmBillApiCall = () => {
-    console.log('Bill confirmed. API call should be implemented here.');
+      // Clear total price and selected items
+      setTotalPrice(0);
+      setSelectedItems([]);
+      setIsTableVisible(false);
+    } catch (error) {
+      console.error('Error confirming bill:', error);
+    }
   };
 
   return (
@@ -66,40 +105,34 @@ const Billing = () => {
         </button>
 
         {/* Items Table */}
-        <table className="w-full border second-color">
-          <thead>
-            <tr>
-              <th className="border p-2">Item Name</th>
-              <th className="border p-2">Item Number</th>
-              <th className="border p-2">Quantity</th>
-              <th className="border p-2">Price</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td className="border p-2">{item.itemName}</td>
-                <td className="border p-2">{item.itemNumber}</td>
-                <td className="border p-2">{item.quantity}</td>
-                <td className="border p-2">{item.price}</td>
-                <td className="border p-2">
-                  <button onClick={() => removeItem(index)} className="text-red-500">
-                    Remove
-                  </button>
-                </td>
+        {isTableVisible && selectedItems.length > 0 && (
+          <table className="w-full border second-color">
+            <thead>
+              <tr>
+                <th className="border p-2">Item Name</th>
+                <th className="border p-2">Price</th>
+                <th className="border p-2">Quantity</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {selectedItems.map((item, index) => (
+                <tr key={index}>
+                  <td className="border p-2">{item.itemName}</td>
+                  <td className="border p-2">{item.price}</td>
+                  <td className="border p-2">{item.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         {/* Total */}
         <div className="mt-4 second-color">
-          <strong>Total: Rs.{calculateTotal()}</strong>
+          <strong>Total: Rs.{totalPrice}</strong>
         </div>
 
         {/* Confirm Bill Button */}
-        <button onClick={confirmBillApiCall} className="bg-fourth-color text-white py-2 px-4 rounded-md mt-4">
+        <button onClick={confirmBill} className="bg-fourth-color text-white py-2 px-4 rounded-md mt-4">
           Confirm Bill
         </button>
       </div>

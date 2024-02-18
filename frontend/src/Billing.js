@@ -51,6 +51,16 @@ const Billing = () => {
     }
   };
 
+  const removeItem = (index) => {
+    const updatedItems = [...selectedItems];
+    updatedItems.splice(index, 1);
+    setSelectedItems(updatedItems);
+
+    // Update total price after removing item
+    const removedItem = selectedItems[index];
+    setTotalPrice(prevTotalPrice => prevTotalPrice - (removedItem.quantity * removedItem.price));
+  };
+
   const confirmBill = async () => {
     try {
       // Make API call to confirm bill
@@ -112,6 +122,7 @@ const Billing = () => {
                 <th className="border p-2">Item Name</th>
                 <th className="border p-2">Price</th>
                 <th className="border p-2">Quantity</th>
+                <th className="border p-2">Actions</th> {/* Add Actions column */}
               </tr>
             </thead>
             <tbody>
@@ -120,6 +131,11 @@ const Billing = () => {
                   <td className="border p-2">{item.itemName}</td>
                   <td className="border p-2">{item.price}</td>
                   <td className="border p-2">{item.quantity}</td>
+                  <td className="border p-2">
+                    <button onClick={() => removeItem(index)} className="text-red-500"> {/* Call removeItem function */}
+                      Remove
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

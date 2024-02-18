@@ -31,10 +31,6 @@ const HamburgerMenu = ({ onLogout }) => {
         <b>Notification</b>
       </Link>
 
-      <Link to="/Profile" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Profile</b>
-      </Link>
-
       {/* Logout Button */}
       <button onClick={handleLogout} className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Logout</b>

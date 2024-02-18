@@ -4,7 +4,6 @@ import Cookies from 'js-cookie'; // Importing js-cookie library
 import SignupForm from './SignupForm';
 import HomePage from './HomePage';
 import Billing from './Billing';
-import Profile from './Profile';
 import Inventory from './Inventory';
 import Notification from './Notification';
 
@@ -30,7 +29,6 @@ const App = () => {
         <Route path="/" element={<SignupForm onLogin={handleLogin} />} />
         <Route path="/HomePage" element={isLoggedIn ? <HomePage onLogout={handleLogout} /> : <Navigate to="/" replace />} />
         <Route path="/Billing" element={isLoggedIn ? <Billing onLogout={handleLogout} /> : <Navigate to="/" replace />} />
-        <Route path="/Profile" element={isLoggedIn ? <Profile onLogout={handleLogout} /> : <Navigate to="/" replace />} />
         <Route path="/Inventory" element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/" replace />} />
         <Route path="/Notification" element={isLoggedIn ? <Notification onLogout={handleLogout} /> : <Navigate to="/" replace />} />
       </Routes>

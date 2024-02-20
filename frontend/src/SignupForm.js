@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -7,24 +8,27 @@ const LoginForm = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    // Check if username and password are filled
-    if (!username || !password) {
-      setError('Please fill in both username and password fields.');
-      return;
-    }
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/signin', {
+        username,
+        password
+      });
 
-    // Check if the provided credentials match the hardcoded values
-    if (username === 'exampleUser' && password === 'password123') {
-      // Redirect to the home page after successful login
-      navigate('/HomePage');
-
-      // Optionally, you can pass user data to the parent component
-      if (onLogin) {
-        onLogin({ username: 'exampleUser' }); // Assuming you pass the username to the parent component
+      if (response.status === 200) {
+        // Redirect to the home page after successful login
+        navigate('/HomePage');
+        
+        // Optionally, you can pass user data to the parent component
+        if (onLogin) {
+          onLogin(response.data.user);
+        }
+      } else {
+        setError('Invalid username or password.');
       }
-    } else {
-      setError('Invalid username or password.');
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred during login. Please try again later.');
     }
   };
 

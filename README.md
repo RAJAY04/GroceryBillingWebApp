@@ -13,14 +13,14 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 
 ### Backend:
 
-- Java
-- Spring Boot
-- MySQL
+- Java ![Java Icon](https://simpleicons.org/icons/java.svg)
+- Spring Boot ![Spring Boot Icon](https://simpleicons.org/icons/spring.svg)
+- MySQL ![MySQL Icon](https://simpleicons.org/icons/mysql.svg)
 
 ### Frontend:
 
-- React.js
-- Tailwind css
+- React.js ![React Icon](https://simpleicons.org/icons/react.svg)
+- Tailwind CSS ![Tailwind CSS Icon](https://simpleicons.org/icons/tailwindcss.svg)
 
 ### API Documentation:
 
@@ -74,10 +74,12 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 ## Screenshots
 
 ### Inventory Page
-![Inventory Page]([https://example.com/inventory_screenshot.png](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Inventory.jpg?raw=true))
+
+![Inventory Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Inventory.jpg?raw=true)
 
 ### Billing Page
-![Billing Page]([https://example.com/billing_screenshot.png](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Billing.jpg?raw=true))
+
+![Billing Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Billing.jpg?raw=true)
 
 ## Usage
 

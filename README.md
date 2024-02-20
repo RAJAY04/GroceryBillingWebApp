@@ -20,6 +20,7 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 ### Frontend:
 
 - React.js
+- Tailwind css
 
 ### API Documentation:
 
@@ -73,10 +74,10 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 ## Screenshots
 
 ### Inventory Page
-![Inventory Page](https://example.com/inventory_screenshot.png)
+![Inventory Page]([https://example.com/inventory_screenshot.png](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Inventory.jpg?raw=true))
 
 ### Billing Page
-![Billing Page](https://example.com/billing_screenshot.png)
+![Billing Page]([https://example.com/billing_screenshot.png](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Billing.jpg?raw=true))
 
 ## Usage
 

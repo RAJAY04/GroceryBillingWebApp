@@ -5,30 +5,35 @@ const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = () => {
     // Check if username and password are filled
     if (!username || !password) {
-      // Display an alert or handle the validation error as needed
-      alert('Please fill in both username and password fields.');
+      setError('Please fill in both username and password fields.');
       return;
     }
 
-    // Perform login logic if needed
+    // Check if the provided credentials match the hardcoded values
+    if (username === 'exampleUser' && password === 'password123') {
+      // Redirect to the home page after successful login
+      navigate('/HomePage');
 
-    // Trigger the login
-    if (onLogin) {
-      onLogin();
+      // Optionally, you can pass user data to the parent component
+      if (onLogin) {
+        onLogin({ username: 'exampleUser' }); // Assuming you pass the username to the parent component
+      }
+    } else {
+      setError('Invalid username or password.');
     }
-
-    // Redirect to the home page after login
-    navigate('/HomePage'); // Navigate to the child page
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-d4ceb0">
       <div className="bg-first-color p-8 rounded-md w-full max-w-md shadow-lg">
         <h2 className="text-3xl font-semibold mb-6 text-center text-second-color">Login</h2>
+
+        {error && <div className="text-red-600 mb-4">{error}</div>}
 
         <div className="mb-4">
           <label htmlFor="username" className="block text-sm font-medium text-third-color">

@@ -13,14 +13,15 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 
 ### Backend:
 
-- Java ![Java Icon](https://simpleicons.org/icons/java.svg)
-- Spring Boot ![Spring Boot Icon](https://simpleicons.org/icons/spring.svg)
-- MySQL ![MySQL Icon](https://simpleicons.org/icons/mysql.svg)
+- Java <img src="https://simpleicons.org/icons/java.svg" alt="Java Icon" width="20" height="20">
+- Spring Boot <img src="https://simpleicons.org/icons/spring.svg" alt="Spring Boot Icon" width="20" height="20">
+- MySQL <img src="https://simpleicons.org/icons/mysql.svg" alt="MySQL Icon" width="20" height="20">
 
 ### Frontend:
 
-- React.js ![React Icon](https://simpleicons.org/icons/react.svg)
-- Tailwind CSS ![Tailwind CSS Icon](https://simpleicons.org/icons/tailwindcss.svg)
+- React.js <img src="https://simpleicons.org/icons/react.svg" alt="React Icon" width="20" height="20">
+- Tailwind CSS <img src="https://simpleicons.org/icons/tailwindcss.svg" alt="Tailwind CSS Icon" width="20" height="20">
+
 
 ### API Documentation:
 

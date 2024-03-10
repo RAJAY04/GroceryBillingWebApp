@@ -29,33 +29,39 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 
 ## Getting Started
 
-1. **Clone the repository:**
+1. **Fork the repository:**
 
-    ```bash
-    git clone https://github.com/RAJAY04/GroceryBillingWebApp.git
+   You can fork the repository by clicking on the "Fork" button at the top right corner of the GitHub page. This will create a copy of the repository in your own GitHub account.
+
+2. **Clone the forked repository:**
+
+   After forking, clone the repository to your local machine using the following command:
+
+   ```bash
+   git clone https://github.com/Your-Username/GroceryBillingWebApp.git
     ```
 
-2. **Navigate to the project directory:**
+3. **Navigate to the project directory:**
 
     ```bash
     cd GroceryBillingWebApp
     ```
 
-3. **Start the backend server:**
+4. **Start the backend server:**
 
     ```bash
     # Assuming Maven is installed
     mvn spring-boot:run
     ```
 
-4. **Start MySQL:**
+5. **Start MySQL:**
 
     ```bash
     #Assuming you have MySQL installed and configured
     mysql -u root -p
     ```
 
-5. **Start the frontend server:**
+6. **Start the frontend server:**
 
     ```bash
     # Navigate to the frontend directory
@@ -70,7 +76,7 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
     npm start
     ```
 
-5. **Open your browser and visit [http://localhost:3000/](http://localhost:3000/) to view the application.**
+7. **Open your browser and visit [http://localhost:3000/](http://localhost:3000/) to view the application.**
 
 ## Screenshots
 

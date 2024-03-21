@@ -10,5 +10,6 @@ public class UrlMapping {
     public static final String GENERATE_TOTAL = BASE_API + "/admin/generate-total";
     public static final String REMOVE_ALL_GROCERY_ITEMS = BASE_API + "/admin/remove-all-grocery-items";
     public static final String BILL_ITEMS = BASE_API + "/admin/bill-items";
-    public static final String SIGN_IN = BASE_API + "/signin";
+    public static final String SIGN_IN = BASE_API + "/auth/signin";
+    public static final String SIGN_UP = BASE_API + "/auth/signup"; // New sign-up endpoint
 }

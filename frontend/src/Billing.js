@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import HamburgerMenu from './HamburgerMenu';
 
 // Define specific endpoints
+const CREATE_BILL = "http://localhost:8080/api/v1/bills";
 const ADMIN_GET_GROCERY_ITEMS = 'http://localhost:8080/api/v1/admin/getGrocery-items';
-const BILL_ITEMS = 'http://localhost:8080/api/v1/admin/bill-items';
 
 const Billing = () => {
-  const [items, setItems] = useState([]);
-  const [itemNumber, setItemNumber] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [isTableVisible, setIsTableVisible] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+ const [items, setItems] = useState([]);
+ const [itemNumber, setItemNumber] = useState('');
+ const [quantity, setQuantity] = useState(1);
+ const [totalPrice, setTotalPrice] = useState(0);
+ const [isTableVisible, setIsTableVisible] = useState(false);
+ const [selectedItems, setSelectedItems] = useState([]);
+ const [name, setName] = useState('');
 
-  useEffect(() => {
+ useEffect(() => {
     // Fetch grocery items on component mount
     const fetchGroceryItems = async () => {
       try {
@@ -26,9 +27,9 @@ const Billing = () => {
     };
 
     fetchGroceryItems();
-  }, []);
+ }, []);
 
-  const addItem = async () => {
+ const addItem = async () => {
     // Find the item with the matching id
     const selectedItem = items.find(item => item.id === parseInt(itemNumber));
 
@@ -49,9 +50,9 @@ const Billing = () => {
     } else {
       alert('Invalid Item Number');
     }
-  };
+ };
 
-  const removeItem = (index) => {
+ const removeItem = (index) => {
     const updatedItems = [...selectedItems];
     updatedItems.splice(index, 1);
     setSelectedItems(updatedItems);
@@ -59,33 +60,56 @@ const Billing = () => {
     // Update total price after removing item
     const removedItem = selectedItems[index];
     setTotalPrice(prevTotalPrice => prevTotalPrice - (removedItem.quantity * removedItem.price));
-  };
+ };
 
-  const confirmBill = async () => {
+ const confirmBill = async () => {
     try {
+      // Prepare the payload
+      const billData = {
+        name,
+        items: selectedItems.map(item => ({
+          itemId: item.itemId,
+          name: item.itemName,
+          price: item.price,
+          quantity: item.quantity
+        }))
+      };
+
       // Make API call to confirm bill
-      await fetch(BILL_ITEMS, {
+      await fetch(CREATE_BILL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(selectedItems),
+        body: JSON.stringify(billData),
       });
 
-      // Clear total price and selected items
+      // Clear total price, name, and selected items
       setTotalPrice(0);
+      setName('');
       setSelectedItems([]);
       setIsTableVisible(false);
     } catch (error) {
       console.error('Error confirming bill:', error);
     }
-  };
+ };
 
-  return (
+ return (
     <div>
       <HamburgerMenu />
       <div className="p-8 first-color">
         <h2 className="text-3xl font-bold mb-6">Billing</h2>
+
+        {/* Name Entry */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-1 p-2 border rounded-md w-full"
+          />
+        </div>
 
         {/* Item Entry */}
         <div className="mb-4">
@@ -128,14 +152,14 @@ const Billing = () => {
             <tbody>
               {selectedItems.map((item, index) => (
                 <tr key={index}>
-                  <td className="border p-2">{item.itemName}</td>
-                  <td className="border p-2">{item.price}</td>
-                  <td className="border p-2">{item.quantity}</td>
-                  <td className="border p-2">
+                 <td className="border p-2">{item.itemName}</td>
+                 <td className="border p-2">{item.price}</td>
+                 <td className="border p-2">{item.quantity}</td>
+                 <td className="border p-2">
                     <button onClick={() => removeItem(index)} className="text-red-500"> {/* Call removeItem function */}
                       Remove
                     </button>
-                  </td>
+                 </td>
                 </tr>
               ))}
             </tbody>
@@ -153,7 +177,7 @@ const Billing = () => {
         </button>
       </div>
     </div>
-  );
+ );
 };
 
 export default Billing;

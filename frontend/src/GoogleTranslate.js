@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const GoogleTranslate = () => {
+const GoogleTranslate = ({variable}) => {
   useEffect(() => {
     // Hide the default Google Translate dropdown after a short delay
     const timeoutId = setTimeout(() => {
@@ -12,7 +12,7 @@ const GoogleTranslate = () => {
 
     // Cleanup function to clear the timeout if the component unmounts
     return () => clearTimeout(timeoutId);
-  }, []);
+  },[variable]);
 
   return (
     <div id="google_translate_element"></div>

@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 
 const LoginForm = ({ onLogin }) => {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  //console.log(onLogin);
   const handleLogin = async () => {
+    let content = { "usernameOrEmail" : username , "password" : password };
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/signin', {
-        username,
-        password
+      const response = await fetch('http://localhost:8080/api/v1/auth/signin', {
+        method: 'POST',
+        body : JSON.stringify(
+        content
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-
+      console.log(response);
       if (response.status === 200) {
-        // Redirect to the home page after successful login
+        console.log(":)");
+        onLogin();
         navigate('/HomePage');
         
-        // Optionally, you can pass user data to the parent component
-        if (onLogin) {
-          onLogin(response.data.user);
-        }
       } else {
         setError('Invalid username or password.');
       }

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import GoogleTranslate from './GoogleTranslate';
+
 
 const HamburgerMenu = ({ onLogout }) => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     // Call the onLogout function passed as a prop
     if (onLogout) {
@@ -36,7 +35,7 @@ const HamburgerMenu = ({ onLogout }) => {
         <b>Logout</b>
       </button>
 
-      <GoogleTranslate />
+      <div id="google_translate_element"></div>
     </div>
   );
 };

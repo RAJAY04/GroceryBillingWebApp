@@ -7,7 +7,7 @@ const NotificationPage = () => {
   useEffect(() => {
     // Mock API call
     // Replace the URL with your actual API endpoint
-    fetch('https://api.example.com/products')
+    fetch('http://localhost:8080/api/v1/auth/signup')
       .then((response) => response.json())
       .then((data) => {
         // Assuming the API returns an array of products

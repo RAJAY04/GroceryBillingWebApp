@@ -7,12 +7,12 @@ import Billing from './Billing';
 import Inventory from './Inventory';
 import Notification from './Notification';
 import SignupPage from './SignupPage';
+import Transactions from './Transactions'; // Import Transactions component
 
 const App = () => {
-
   // Initialize isLoggedIn state based on the presence of the isLoggedIn cookie
   const [isLoggedIn, setLoggedIn] = useState(!!Cookies.get('isLoggedIn'));
-  console.log(isLoggedIn);
+
   // Function to handle user login
   const handleLogin = () => {
     setLoggedIn(true);
@@ -26,28 +26,35 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SignupForm onLogin={handleLogin} />} />
-        <Route path="/Signup" element={<SignupPage />} />
-        <Route
-          path="/HomePage"
-          element={isLoggedIn ? <HomePage onLogout={handleLogout} /> : <Navigate to="/" replace />}
-        />
-        <Route
-          path="/Billing"
-          element={isLoggedIn ? <Billing onLogout={handleLogout} /> : <Navigate to="/" replace />}
-        />
-        <Route
-          path="/Inventory"
-          element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/" replace />}
-        />
-        <Route
-          path="/Notification"
-          element={isLoggedIn ? <Notification onLogout={handleLogout} /> : <Navigate to="/" replace />}
-        />
-      </Routes>
-    </Router>
+      <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://www.unicosmos.in/wp-content/uploads/2016/05/placeholder.gif)', minHeight: '100vh' }}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<SignupForm onLogin={handleLogin} />} />
+            <Route path="/Signup" element={<SignupPage />} />
+            <Route
+                path="/HomePage"
+                element={isLoggedIn ? <HomePage onLogout={handleLogout} /> : <Navigate to="/" replace />}
+            />
+            <Route
+                path="/Billing"
+                element={isLoggedIn ? <Billing onLogout={handleLogout} /> : <Navigate to="/" replace />}
+            />
+            <Route
+                path="/Inventory"
+                element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/" replace />}
+            />
+            <Route
+                path="/Notification"
+                element={isLoggedIn ? <Notification onLogout={handleLogout} /> : <Navigate to="/" replace />}
+            />
+            {/* Add Transactions Route */}
+            <Route
+                path="/Transactions"
+                element={isLoggedIn ? <Transactions /> : <Navigate to="/" replace />}
+            />
+          </Routes>
+        </Router>
+      </div>
   );
 };
 

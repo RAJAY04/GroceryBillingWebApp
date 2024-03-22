@@ -40,6 +40,12 @@ const HamburgerMenu = ({ onLogout }) => {
                     <span className="ml-2">Notification</span>
                 </Link>
 
+                {/* Transactions */}
+                <Link to="/Transactions" className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faShoppingCart} className="text-white text-2xl" />
+                    <span className="ml-2">Transactions</span>
+                </Link>
+
                 {/* Logout */}
                 <button onClick={handleLogout} className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
                     <FontAwesomeIcon icon={faSignOutAlt} className="text-white text-2xl" />

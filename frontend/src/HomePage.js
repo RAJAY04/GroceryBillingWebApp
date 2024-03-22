@@ -6,7 +6,7 @@ import NoteSection from './NoteSection';
 const HomePage = () => {
   return (
 
-    <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://www.unicosmos.in/wp-content/uploads/2016/05/placeholder.gif)' }}>
+    <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://th.bing.com/th/id/OIP.2Jdxc6AdJLCBPIM8dONzwQHaEo?rs=1&pid=ImgDetMain)' }}>
       {/* Hamburger Menu */}
 
       <HamburgerMenu />

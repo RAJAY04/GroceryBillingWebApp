@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginForm = ({ onLogin }) => {
   let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  //console.log(onLogin);
+
   const handleLogin = async () => {
     let content = { "usernameOrEmail" : username , "password" : password };
     try {
       const response = await fetch('http://localhost:8080/api/v1/auth/signin', {
         method: 'POST',
-        body : JSON.stringify(
-        content
-        ),
+        body : JSON.stringify(content),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
+
       if (response.status === 200) {
-        console.log(":)");
         onLogin();
         navigate('/HomePage');
-        
       } else {
         setError('Invalid username or password.');
       }
@@ -70,6 +65,10 @@ const LoginForm = ({ onLogin }) => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-fourth-color"
             placeholder="Your Password"
           />
+        </div>
+
+        <div className="mb-4 text-center">
+          <a href="http://localhost:3000/Signup" className="text-blue-500 hover:underline">Don't have an account? Sign up here</a>
         </div>
 
         <button

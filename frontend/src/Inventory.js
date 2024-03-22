@@ -126,7 +126,7 @@ const Inventory = () => {
                 >
                   + Add Product
                 </button>
-
+        <div className="grid grid-cols-3 gap-4">
         {inventoryData.map((product) => (
           <div key={product.id} className="bg-first-color p-8 rounded-md mb-4">
             <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
@@ -146,7 +146,7 @@ const Inventory = () => {
             </button>
           </div>
         ))}
-
+</div>
 
 
         {showAddProductModal && (
@@ -278,7 +278,7 @@ const Inventory = () => {
                 </button>
                 <button
                   onClick={handleUpdateProduct}
-                  className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded mt-2 ml-2 hover:bg-blue-600"
                 >
                   Update Product
                 </button>

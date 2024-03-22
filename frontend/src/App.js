@@ -7,12 +7,12 @@ import Billing from './Billing';
 import Inventory from './Inventory';
 import Notification from './Notification';
 import SignupPage from './SignupPage';
-import Transactions from './Transactions'; // Import Transactions component
 
 const App = () => {
+
   // Initialize isLoggedIn state based on the presence of the isLoggedIn cookie
   const [isLoggedIn, setLoggedIn] = useState(!!Cookies.get('isLoggedIn'));
-
+  console.log(isLoggedIn);
   // Function to handle user login
   const handleLogin = () => {
     setLoggedIn(true);
@@ -45,11 +45,6 @@ const App = () => {
         <Route
           path="/Notification"
           element={isLoggedIn ? <Notification onLogout={handleLogout} /> : <Navigate to="/" replace />}
-        />
-        {/* Add Transactions Route */}
-        <Route
-          path="/Transactions"
-          element={isLoggedIn ? <Transactions /> : <Navigate to="/" replace />}
         />
       </Routes>
     </Router>

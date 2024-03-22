@@ -115,10 +115,14 @@ const Inventory = () => {
   };
 
   return (
+
     <div>
+
       <HamburgerMenu />
+
       <div className="p-8">
-        <h2 className="text-3xl font-bold">Inventory</h2>
+
+        <h2 className="text-3xl font-bold mb-4">Inventory</h2>
 
         <button
                   onClick={() => setShowAddProductModal(true)}

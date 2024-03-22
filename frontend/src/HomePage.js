@@ -5,8 +5,10 @@ import NoteSection from './NoteSection';
 
 const HomePage = () => {
   return (
+
     <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://www.unicosmos.in/wp-content/uploads/2016/05/placeholder.gif)' }}>
       {/* Hamburger Menu */}
+
       <HamburgerMenu />
 
       {/* Main Content */}

@@ -113,14 +113,20 @@ const NoteSection = () => {
               <span>{note.task}</span>
             </div>
             <div>
-              <button onClick={() => handleUpdateTask(note.id)} className="text-blue-500 px-4 py-2 rounded-lg mr-2">Update</button>
-              <button onClick={() => handleRemoveNote(note.id)} className="text-red-500 px-4 py-2 rounded-lg">Remove</button>
+                <button onClick={() => handleUpdateTask(note.id)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-600">Update
+                </button>
+                <button onClick={() => handleRemoveNote(note.id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Remove
+                </button>
+
             </div>
           </li>
         ))}
       </ol>
-      {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+        {showModal && (
+            <div
+                className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-4">Update Task</h3>
             <input

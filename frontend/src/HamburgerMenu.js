@@ -1,47 +1,54 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faBoxOpen, faMoneyBill, faBell, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const HamburgerMenu = ({ onLogout }) => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    // Call the onLogout function passed as a prop
-    if (onLogout) {
-      onLogout();
-    }
-    navigate('/', { replace: true });
-  };
+    const navigate = useNavigate();
 
-  return (
-    <div className="bg-ede7cf lg:flex-col md:flex-col sm:flex-row justify-between items-center p-4">
-      <Link to="/HomePage" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Home</b>
-      </Link>
+    const handleLogout = () => {
+        if (onLogout) {
+            onLogout();
+        }
+        navigate('/', { replace: true });
+    };
 
-      <Link to="/Inventory" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Inventory</b>
-      </Link>
+    return (
+        <div className="relative">
+            <div className="bg-gradient-to-r from-purple-500 via-blue-500 to-blue-700 lg:flex-col md:flex-col sm:flex-row justify-between items-center p-4">
+                {/* Home */}
+                <Link to="/HomePage" className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faHome} className="text-white text-2xl" />
+                    <span className="ml-2">Home</span>
+                </Link>
 
-      <Link to="/Billing" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Billing</b>
-      </Link>
+                {/* Inventory */}
+                <Link to="/Inventory" className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faBoxOpen} className="text-white text-2xl" />
+                    <span className="ml-2">Inventory</span>
+                </Link>
 
-      <Link to="/Notification" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Notification</b>
-      </Link>
+                {/* Billing */}
+                <Link to="/Billing" className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faMoneyBill} className="text-white text-2xl" />
+                    <span className="ml-2">Billing</span>
+                </Link>
 
-      {/* Transactions Button */}
-      <Link to="/Transactions" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Transactions</b>
-      </Link>
+                {/* Notification */}
+                <Link to="/Notification" className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faBell} className="text-white text-2xl" />
+                    <span className="ml-2">Notification</span>
+                </Link>
 
-      {/* Logout Button */}
-      <button onClick={handleLogout} className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
-        <b>Logout</b>
-      </button>
-
-      <div id="google_translate_element"></div>
-    </div>
-  );
+                {/* Logout */}
+                <button onClick={handleLogout} className="hover:bg-purple-700 hover:rounded-2xl flex items-center text-white md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+                    <FontAwesomeIcon icon={faSignOutAlt} className="text-white text-2xl" />
+                    <span className="ml-2">Logout</span>
+                </button>
+            </div>
+            <div id="google_translate_element" className="absolute top-0 right-0 m-4"></div>
+        </div>
+    );
 };
 
 export default HamburgerMenu;

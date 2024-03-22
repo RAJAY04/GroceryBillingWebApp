@@ -83,44 +83,6 @@ public class GroceryItemService {
         }
     }
 
-
-    public List<GroceryItem> getAvailableGroceryItems() {
-        return groceryItemRepository.findAllByQuantityGreaterThan(0);
-    }
-
-    public Orders createOrder(List<GroceryItemDTO> orderItemsDTO) {
-        BigDecimal total = BigDecimal.ZERO;
-        List<GroceryItem> orderItems = convertDTOsToEntities(orderItemsDTO);
-
-        for (GroceryItem orderItem : orderItems) {
-            Optional<GroceryItem> optionalItem = groceryItemRepository.findById(orderItem.getId());
-            if (optionalItem.isPresent()) {
-                GroceryItem item = optionalItem.get();
-                if (item.getQuantity() >= orderItem.getQuantity()) {
-                    BigDecimal itemTotal = item.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity()));
-                    total = total.add(itemTotal);
-
-                    item.setQuantity(item.getQuantity() - orderItem.getQuantity());
-                    groceryItemRepository.save(item);
-                } else {
-                    throw new InsufficientQuantityException("Insufficient quantity available for item: " + item.getName());
-                }
-            } else {
-                throw new ItemNotFoundException("Item not found with id: " + orderItem.getId());
-            }
-        }
-
-        Orders order = new Orders();
-        order.setItems(orderItems);
-        order.setOrderTime(LocalDateTime.now());
-        order.setTotalPrice(total);
-        orderRepository.save(order);
-
-        return order;
-    }
-
-
-
     public double calculateTotal(List<Long> itemIds) {
         double total = 0.0;
 

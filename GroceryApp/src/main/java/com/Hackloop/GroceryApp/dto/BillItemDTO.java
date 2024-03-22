@@ -1,2 +1,17 @@
-package com.Hackloop.GroceryApp.dto;public class BillItemDto {
+package com.Hackloop.GroceryApp.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BillItemDTO {
+    private Long itemId;
+    private String name;
+    private BigDecimal price;
+    private int quantity;
+
 }

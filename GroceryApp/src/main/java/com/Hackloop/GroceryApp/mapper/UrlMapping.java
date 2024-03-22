@@ -19,4 +19,7 @@ public class UrlMapping {
     public static final String UPDATE_TASK = BASE_API + "/tasks/{id}";
     public static final String DELETE_TASK = BASE_API + "/tasks/{id}";
     public static final String CHECK_INVENTORY = BASE_API + "/admin/check-inventory";
+    public static final String CREATE_BILL = BASE_API + "/bills";
+    public static final String DELETE_BILL = BASE_API + "/bills/{id}";
+    public static final String GET_ALL_BILLS = BASE_API + "/bills";
 }

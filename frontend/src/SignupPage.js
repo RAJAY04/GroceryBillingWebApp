@@ -16,23 +16,19 @@ const SignupPage = () => {
       "username" : username ,
       "email" : email ,
       "password" : password
-      };
-    console.log(content);
-    
+    };
+
     try {
       const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
         method: 'POST',
-        body : JSON.stringify(
-        content
-        ),
+        body: JSON.stringify(content),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
+
       if (response.status === 200) {
-        const data = response.json();
-        console.log(data);
+        const data = await response.json();
         if (data) {
           navigate('/');
         } else {
@@ -42,15 +38,14 @@ const SignupPage = () => {
         setError('Signup failed. Please try again.');
       }
     } catch (error) {
-      
       console.error('Error during signup:', error);
       setError('An error occurred during signup. Please try again later.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-md w-full max-w-md shadow-lg">
+    <div className="flex items-center justify-center min-h-screen bg-d4ceb0">
+      <div className="bg-first-color p-8 rounded-md w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
 
         {error && <div className="text-red-600 mb-4">{error}</div>}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 const HamburgerMenu = ({ onLogout }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -28,6 +27,11 @@ const HamburgerMenu = ({ onLogout }) => {
 
       <Link to="/Notification" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
         <b>Notification</b>
+      </Link>
+
+      {/* Transactions Button */}
+      <Link to="/Transactions" className="hover:bg-d4ceb0 hover:rounded-2xl flex items-center text-black md:inline lg:inline-block mb-4 lg:mr-4 m-4">
+        <b>Transactions</b>
       </Link>
 
       {/* Logout Button */}

@@ -6,7 +6,7 @@ import NoteSection from './NoteSection';
 const HomePage = () => {
   return (
 
-    <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://th.bing.com/th/id/OIP.2Jdxc6AdJLCBPIM8dONzwQHaEo?rs=1&pid=ImgDetMain)' }}>
+    <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://www.creativefabrica.com/wp-content/uploads/2022/04/21/White-abstract-background-design-Graphics-29375060-1-580x387.jpg)' }}>
       {/* Hamburger Menu */}
 
       <HamburgerMenu />

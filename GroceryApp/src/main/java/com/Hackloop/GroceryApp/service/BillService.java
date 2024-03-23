@@ -72,7 +72,7 @@ public class BillService {
 
 
         List<String> items = itemsDTO.stream()
-        .map(itemDTO -> itemDTO.getName() + " - " + itemDTO.getPrice() + " - " + itemDTO.getQuantity())
+        .map(itemDTO -> itemDTO.getName() + " - " + itemDTO.getPrice() + " - quantity :  " + itemDTO.getQuantity())
         .collect(Collectors.toList());
 
         // Create the bill

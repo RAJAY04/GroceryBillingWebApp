@@ -29,7 +29,6 @@ const NotificationPage = () => {
                             <h3 className="text-lg font-semibold mb-2">{item.name}</h3>
                             <p className="text-gray-700 mb-2">Quantity: {item.quantity}</p>
                             <p className="text-gray-700">Price per Unit: ₹{item.price}</p>
-                            <p className="text-gray-700">Range: {item.range}</p>
                         </div>
                     ))}
                 </div>

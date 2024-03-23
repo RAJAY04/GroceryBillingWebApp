@@ -143,7 +143,7 @@ const Billing = () => {
                     <table className="w-full border second-color">
                         <thead>
                         <tr>
-                            <th className="border p-2">Item                                Name</th>
+                            <th className="border p-2">Item Name</th>
                             <th className="border p-2">Price</th>
                             <th className="border p-2">Quantity</th>
                             <th className="border p-2">Actions</th> {/* Add Actions column */}
@@ -153,11 +153,11 @@ const Billing = () => {
                         {selectedItems.map((item, index) => (
                             <tr key={index}>
                                 <td className="border p-2">{item.itemName}</td>
-                                <td className="border p-2">{item.price}</td>
+                                {/* Prepend the Rupee symbol to each price */}
+                                <td className="border p-2">₹{item.price}</td>
                                 <td className="border p-2">{item.quantity}</td>
                                 <td className="border p-2">
                                     <button onClick={() => removeItem(index)} className="text-red-500">
-                                        {/* Call removeItem function */}
                                         Remove
                                     </button>
                                 </td>
@@ -169,8 +169,10 @@ const Billing = () => {
 
                 {/* Total */}
                 <div className="mt-4 second-color">
-                    <strong>Total: Rs.{totalPrice}</strong>
+                    {/* Prepend the Rupee symbol to the total price */}
+                    <strong>Total: ₹{totalPrice}</strong>
                 </div>
+
 
                 {/* Confirm Bill Button */}
                 <button onClick={confirmBill} className="bg-fourth-color text-white py-2 px-4 rounded-md mt-4">

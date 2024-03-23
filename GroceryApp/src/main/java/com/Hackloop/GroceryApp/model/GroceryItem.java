@@ -20,8 +20,4 @@ public class GroceryItem {
     private String name;
     private BigDecimal price;
     private int quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Orders order;
 }

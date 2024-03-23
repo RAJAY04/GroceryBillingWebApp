@@ -1,4 +1,4 @@
-package com.Hackloop.GroceryApp;
+package com.Hackloop.GroceryApp.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 

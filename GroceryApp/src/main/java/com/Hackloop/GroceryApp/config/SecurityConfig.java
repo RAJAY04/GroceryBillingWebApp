@@ -1,4 +1,4 @@
-package com.Hackloop.GroceryApp;
+package com.Hackloop.GroceryApp.config;
 
 import com.Hackloop.GroceryApp.mapper.UrlMapping;
 import org.springframework.context.annotation.Bean;

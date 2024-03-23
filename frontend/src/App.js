@@ -26,6 +26,7 @@ const App = () => {
   };
 
   return (
+
       <div className="bg-cover bg-center" style={{ backgroundImage: 'url(https://www.creativefabrica.com/wp-content/uploads/2022/04/21/White-abstract-background-design-Graphics-29375060-1-580x387.jpg)' }}>
 
       <Router>

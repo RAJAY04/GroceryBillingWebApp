@@ -80,13 +80,30 @@ The Grocery Billing Web App is a full-stack web application designed to facilita
 
 ## Screenshots
 
+### Login Page
+
+![Login](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Login.png?raw=true)
+
+### Home Page
+
+![HomePage](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/HomePage.png?raw=true)
+
+
 ### Inventory Page
 
-![Inventory Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Inventory.jpg?raw=true)
+![Inventory Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Inventory.png?raw=true)
 
 ### Billing Page
 
-![Billing Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Billing.jpg?raw=true)
+![Billing Page](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Billing.png?raw=true)
+
+### Notification Page
+
+![NotificationPage](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Notification.png?raw=true)
+
+### Transaction Page
+
+![TransactionPage](https://github.com/RAJAY04/GroceryBillingWebApp/blob/main/Transaction.png?raw=true)
 
 ## Usage
 
